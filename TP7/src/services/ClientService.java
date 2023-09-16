@@ -27,6 +27,13 @@ public class ClientService {
 		// Validation
 		List<String> messages = new ArrayList<String>();
 		
+		for (Client client : this.clients) {
+			if (client.getCuit() == clientData.getCuit()) {
+				messages.add("El cuit ya está en uso");
+				return 0;
+			}
+		}
+		
 		if (clientData.getName().length() < 2) {
 			messages.add("El nombre debe contener más de dos caracteres");
 		}
