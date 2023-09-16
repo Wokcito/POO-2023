@@ -1,7 +1,6 @@
 package services;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import dtos.ClientDTO;
@@ -9,8 +8,8 @@ import dtos.CreatePurchaseDTO;
 import dtos.CreatePurchaseLineDTO;
 import dtos.ProductDTO;
 import dtos.PurchaseDTO;
-import dtos.PurchaseLineDTO;
 import exceptions.CreatePurchaseException;
+import mappers.PurchaseMapper;
 import models.Purchase;
 import models.PurchaseLine;
 
@@ -86,13 +85,7 @@ public class PurchaseService {
 		// If all is correct
 		int purchaseId = (int)Math.random() * (9999 - 1000 + 1) + 1000;
 		
-		Purchase purchase = new Purchase(
-				purchaseId,
-				clientData.getId(),
-				purchaseLines,
-				purchaseData.getPromotion(),
-				new Date()
-		);
+		Purchase purchase = PurchaseMapper.dtoToPurchase(purchaseId, clientData.getId(), purchaseLines, purchaseData.getPromotion());
 
 		purchases.add(purchase);
 		return purchaseId;
@@ -116,24 +109,6 @@ public class PurchaseService {
 			return null;
 		}
 		
-		PurchaseDTO purchase = new PurchaseDTO();
-		purchase.setId(foundPurchase.getId());
-		purchase.setClientId(foundPurchase.getClientID());
-		purchase.setPromotion(foundPurchase.getPromotion());
-		
-		List<PurchaseLineDTO> purchaseLines = new ArrayList<PurchaseLineDTO>();
-		
-		for (PurchaseLine purchaseLineData : foundPurchase.getPurchaseLines()) {
-			PurchaseLineDTO purchaseLine = new PurchaseLineDTO();
-			purchaseLine.setId(purchaseLineData.getId());
-			purchaseLine.setProduct(purchaseLineData.getProduct());
-			purchaseLine.setQuantity(purchaseLineData.getQuantity());
-			
-			purchaseLines.add(purchaseLine);
-		}
-		
-		purchase.setPurchaseLines(purchaseLines);
-		
-		return purchase;
+		return PurchaseMapper.purchaseToDTO(foundPurchase);
 	}
 }

@@ -8,6 +8,7 @@ import models.Client;
 import dtos.ClientDTO;
 import dtos.CreateClientDTO;
 import exceptions.CreateClientException;
+import mappers.ClientMapper;
 
 public class ClientService {
 	private List<Client> clients = new ArrayList<Client>();
@@ -21,24 +22,24 @@ public class ClientService {
 	 * @return New client's id
 	 * @throws CreateClientException
 	 */
-	public int create(CreateClientDTO dataClient) throws CreateClientException {
+	public int create(CreateClientDTO clientData) throws CreateClientException {
 		
 		// Validation
 		List<String> messages = new ArrayList<String>();
 		
-		if (dataClient.getName().length() < 2) {
+		if (clientData.getName().length() < 2) {
 			messages.add("El nombre debe contener más de dos caracteres");
 		}
 		
-		if (cuitRegExp.matcher(dataClient.getCuit()) == null) {
+		if (cuitRegExp.matcher(clientData.getCuit()) == null) {
 			messages.add("El cuit no es válido");
 		}
 		
-		if (emailRegExp.matcher(dataClient.getEmail()) == null) {
+		if (emailRegExp.matcher(clientData.getEmail()) == null) {
 			messages.add("El email no es válido");
 		}
 		
-		if (numberRegExp.matcher(dataClient.getNumberPhone()) == null) {
+		if (numberRegExp.matcher(clientData.getNumberPhone()) == null) {
 			messages.add("El número no es válido");
 		}
 
@@ -47,18 +48,12 @@ public class ClientService {
 		}
 		
 		// If all is correct
-		int clientID = (int)Math.random() * (9999 - 1000 + 1) + 1000;
+		int clientId = (int)Math.random() * (9999 - 1000 + 1) + 1000;
 		
-		Client client = new Client(
-				clientID,
-				dataClient.getName(),
-				dataClient.getCuit(),
-				dataClient.getEmail(),
-				dataClient.getNumberPhone()
-				);
+		Client client = ClientMapper.dtoToClient(clientData, clientId);
 		
 		clients.add(client);
-		return clientID;
+		return clientId;
 	}
 	
 	/**
@@ -79,13 +74,6 @@ public class ClientService {
 			return null;
 		}
 		
-		ClientDTO client = new ClientDTO();
-		client.setName(foundClient.getName());
-		client.setCuit(foundClient.getCuit());
-		client.setEmail(foundClient.getEmail());
-		client.setNumberPhone(foundClient.getNumberPhone());
-		client.setId(foundClient.getId());
-		
-		return client;
+		return ClientMapper.clientToDTO(foundClient);
 	}
 }
