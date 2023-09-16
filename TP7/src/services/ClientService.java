@@ -1,10 +1,10 @@
-package service;
+package services;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import model.Client;
+import models.Client;
 import dtos.ClientDTO;
 import dtos.CreateClientDTO;
 import exceptions.CreateClientException;

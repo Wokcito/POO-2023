@@ -1,4 +1,4 @@
-package service;
+package services;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,8 +11,8 @@ import dtos.ProductDTO;
 import dtos.PurchaseDTO;
 import dtos.PurchaseLineDTO;
 import exceptions.CreatePurchaseException;
-import model.Purchase;
-import model.PurchaseLine;
+import models.Purchase;
+import models.PurchaseLine;
 
 public class PurchaseService {
 	private ClientService clientService;

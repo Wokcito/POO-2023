@@ -1,7 +1,7 @@
-package model;
+package models;
 
 import exceptions.CreateProductException;
-import service.ProductService;
+import services.ProductService;
 import dtos.ProductDTO;
 
 public class Main {

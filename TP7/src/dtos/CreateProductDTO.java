@@ -1,6 +1,6 @@
 package dtos;
 
-import model.ProductType;
+import models.ProductType;
 
 public class CreateProductDTO {
 	private String name;

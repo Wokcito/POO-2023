@@ -1,4 +1,4 @@
-package service;
+package services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 
 import dtos.CreateProductDTO;
 import dtos.ProductDTO;
-import model.Product;
+import models.Product;
 import exceptions.CreateProductException;
 
 public class ProductService {
