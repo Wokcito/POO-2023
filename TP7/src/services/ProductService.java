@@ -10,7 +10,20 @@ import exceptions.CreateProductException;
 import mappers.ProductMapper;
 
 public class ProductService {
+	private static ProductService productService;
 	private List<Product> products = new ArrayList<Product>();
+	
+	/**
+	 * Returns a single instance of ProductService
+	 * @return ProductService's instance
+	 */
+	public static ProductService getInstance() {
+		if (productService == null) {
+			productService = new ProductService();
+		}
+		
+		return productService;
+	}
 	
 	/**
 	 * Creates a new product an returns its id

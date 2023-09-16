@@ -11,10 +11,23 @@ import exceptions.CreateClientException;
 import mappers.ClientMapper;
 
 public class ClientService {
+	private static ClientService clientService;
 	private List<Client> clients = new ArrayList<Client>();
 	private Pattern cuitRegExp = Pattern.compile("/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/g");
 	private Pattern emailRegExp = Pattern.compile(" /^(([^<>()\\[\\]\\\\.,;:\\s@”]+(\\.[^<>()\\[\\]\\\\.,;:\\s@”]+)*)|(“.+”))@((\\[[0–9]{1,3}\\.[0–9]{1,3}\\.[0–9]{1,3}\\.[0–9]{1,3}])|(([a-zA-Z\\-0–9]+\\.)+[a-zA-Z]{2,}))$/");
 	private Pattern numberRegExp = Pattern.compile("[0-9()-]+");
+	
+	/**
+	 * Returns a single instance of ClientService
+	 * @return ClientService's instance
+	 */
+	public static ClientService getInstance() {
+		if (clientService == null) {
+			clientService = new ClientService();
+		}
+		
+		return clientService;
+	}
 	
 	/**
 	 * Creates a new client and returns his/her id

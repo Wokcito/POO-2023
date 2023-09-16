@@ -14,6 +14,7 @@ import models.Purchase;
 import models.PurchaseLine;
 
 public class PurchaseService {
+	private static PurchaseService purchaseService;
 	private ClientService clientService;
 	private ProductService productService;
 	private List<Purchase> purchases = new ArrayList<Purchase>();
@@ -22,9 +23,23 @@ public class PurchaseService {
 	 * @param clientService
 	 * @param productService
 	 */
-	public PurchaseService(ClientService clientService, ProductService productService) {
+	private PurchaseService(ClientService clientService, ProductService productService) {
 		this.clientService = clientService;
 		this.productService = productService;
+	}
+	
+	/**
+	 * Returns a single instance of PurchaseService
+	 * @param clientService
+	 * @param productService
+	 * @return PurchaseService's instance
+	 */
+	public static PurchaseService getInstance(ClientService clientService, ProductService productService) {
+		if (purchaseService == null) {
+			purchaseService = new PurchaseService(clientService, productService);
+		}
+		
+		return purchaseService;
 	}
 	
 	/**
